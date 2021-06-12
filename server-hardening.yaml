@@ -1,0 +1,72 @@
+---
+  - hosts: main
+    tasks:
+      - name: update repositories
+        apt:
+          update_cache: yes 
+          force_apt_get: yes
+          
+      - name: upgrade all packages
+        apt:
+          upgrade: dist
+          force_apt_get: yes
+
+      - name: setup auto-upgrade
+        copy:
+          dest: "/etc/apt/apt.conf.d/20auto-upgrades"
+          content: |
+            APT::Periodic::Update-Package-Lists "1";
+            APT::Periodic::Unattended-Upgrade "1";
+
+      - name: add user "user"
+        user:
+          name: user
+          groups: root
+          shell: '/bin/bash'
+
+      - name: add ssh key for user
+        authorized_key:
+          user: user
+          key: "{{ lookup('file', './keys/user.pub') }}"
+
+      - name: add user to sudoers.d
+        copy:
+          dest: "/etc/sudoers.d/user"
+          content: |
+            user ALL=(ALL) NOPASSWD: ALL
+          owner: root
+          group: root
+          mode: 0440
+
+      - name: disable empty password login
+        lineinfile:
+          dest: "/etc/ssh/sshd_config"
+          regexp: '^(#\s*)?PermitEmptyPasswords'
+          line: 'PermitEmptyPasswords no'
+
+      - name: disable remote root login
+        lineinfile:
+          dest: "/etc/ssh/sshd_config"
+          regexp: '^(#\s*)?PermitRootLogin'
+          line: 'PermitRootLogin no'
+
+      - name: disable password login
+        lineinfile:
+          dest: "/etc/ssh/sshd_config"
+          regexp: '^(#\s*)?PasswordAuthentication '
+          line: 'PasswordAuthentication no'
+
+      - name: change ssh port from 22 to 4268
+        lineinfile:
+          dest: "/etc/ssh/sshd_config"
+          regexp: '^(#\s*)?Port 22 '
+          line: 'Port 4268'
+
+      - name: restart ssh
+        service:
+          name: ssh
+          state: restarted
+
+        
+
+
