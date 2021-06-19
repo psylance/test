@@ -1,0 +1,49 @@
+2021-06-19 13:28:49,802 p=142 u=kali n=ansible | PLAY [main] ************************************************************************************************************
+2021-06-19 13:28:49,810 p=142 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ********************************************************
+2021-06-19 13:28:55,426 p=142 u=kali n=ansible | ok: [207.148.73.66]
+2021-06-19 13:28:55,436 p=142 u=kali n=ansible | TASK [install prerequisites name=['apt-transport-https', 'ca-certificates', 'curl', 'gnupg-agent', 'lsb-release'], update_cache=True] ***
+2021-06-19 13:29:08,921 p=142 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:29:08,927 p=142 u=kali n=ansible | TASK [add apt-key (Docker) url=https://download.docker.com/linux/ubuntu/gpg] *******************************************
+2021-06-19 13:29:11,504 p=142 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:29:11,510 p=142 u=kali n=ansible | TASK [add apt-key (Kubernetes) url=https://packages.cloud.google.com/apt/doc/apt-key.gpg] ******************************
+2021-06-19 13:29:13,997 p=142 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:29:14,003 p=142 u=kali n=ansible | TASK [add docker repo repo=deb https://download.docker.com/linux/ubuntu focal stable] **********************************
+2021-06-19 13:29:21,746 p=142 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:29:21,752 p=142 u=kali n=ansible | TASK [add kubernetes repo repo=deb https://apt.kubernetes.io/ kubernetes-xenial main] **********************************
+2021-06-19 13:29:29,457 p=142 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:29:29,463 p=142 u=kali n=ansible | TASK [install docker name=['docker-ce', 'docker-ce-cli', 'containerd.io'], update_cache=True] **************************
+2021-06-19 13:29:55,168 p=142 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:29:55,176 p=142 u=kali n=ansible | TASK [install kubernetes name=['kubelet', 'kubeadm', 'kubectl'], update_cache=True] ************************************
+2021-06-19 13:30:16,361 p=142 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:30:16,374 p=142 u=kali n=ansible | PLAY RECAP *************************************************************************************************************
+2021-06-19 13:30:16,374 p=142 u=kali n=ansible | 207.148.73.66              : ok=8    changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2021-06-19 13:33:34,805 p=354 u=kali n=ansible | PLAY [main] ********************************************************************
+2021-06-19 13:33:34,812 p=354 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ****************
+2021-06-19 13:33:39,028 p=354 u=kali n=ansible | ok: [207.148.73.66]
+2021-06-19 13:33:39,042 p=354 u=kali n=ansible | TASK [update repositories update_cache=True, force_apt_get=True] ***************
+2021-06-19 13:33:42,432 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:33:42,438 p=354 u=kali n=ansible | TASK [upgrade all packages upgrade=dist, force_apt_get=True] *******************
+2021-06-19 13:36:29,610 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:29,892 p=354 u=kali n=ansible | TASK [setup auto-upgrade dest=/etc/apt/apt.conf.d/20auto-upgrades, content=APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+] ***
+2021-06-19 13:36:33,850 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:33,856 p=354 u=kali n=ansible | TASK [add user "user" name=user, groups=root, shell=/bin/bash] *****************
+2021-06-19 13:36:35,666 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:35,674 p=354 u=kali n=ansible | TASK [add ssh key for user user=user, key={{ lookup('file', './keys/user.pub') }}] ***
+2021-06-19 13:36:37,722 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:37,727 p=354 u=kali n=ansible | TASK [add user to sudoers.d dest=/etc/sudoers.d/user, content=user ALL=(ALL) NOPASSWD: ALL
+, owner=root, group=root, mode=288] ***
+2021-06-19 13:36:41,213 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:41,219 p=354 u=kali n=ansible | TASK [disable empty password login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PermitEmptyPasswords, line=PermitEmptyPasswords no] ***
+2021-06-19 13:36:42,866 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:42,872 p=354 u=kali n=ansible | TASK [disable remote root login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PermitRootLogin, line=PermitRootLogin no] ***
+2021-06-19 13:36:44,428 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:44,434 p=354 u=kali n=ansible | TASK [disable password login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PasswordAuthentication , line=PasswordAuthentication no] ***
+2021-06-19 13:36:46,298 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:46,310 p=354 u=kali n=ansible | TASK [change ssh port from 22 to 4268 dest=/etc/ssh/sshd_config, regexp=^(#\s*)?Port 22 , line=Port 4268] ***
+2021-06-19 13:36:47,892 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:47,899 p=354 u=kali n=ansible | TASK [restart ssh name=ssh, state=restarted] ***********************************
+2021-06-19 13:36:50,041 p=354 u=kali n=ansible | changed: [207.148.73.66]
+2021-06-19 13:36:50,055 p=354 u=kali n=ansible | PLAY RECAP *********************************************************************
+2021-06-19 13:36:50,056 p=354 u=kali n=ansible | 207.148.73.66              : ok=12   changed=11   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
