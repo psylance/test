@@ -1,49 +1,269 @@
-2021-06-19 13:28:49,802 p=142 u=kali n=ansible | PLAY [main] ************************************************************************************************************
-2021-06-19 13:28:49,810 p=142 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ********************************************************
-2021-06-19 13:28:55,426 p=142 u=kali n=ansible | ok: [207.148.73.66]
-2021-06-19 13:28:55,436 p=142 u=kali n=ansible | TASK [install prerequisites name=['apt-transport-https', 'ca-certificates', 'curl', 'gnupg-agent', 'lsb-release'], update_cache=True] ***
-2021-06-19 13:29:08,921 p=142 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:29:08,927 p=142 u=kali n=ansible | TASK [add apt-key (Docker) url=https://download.docker.com/linux/ubuntu/gpg] *******************************************
-2021-06-19 13:29:11,504 p=142 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:29:11,510 p=142 u=kali n=ansible | TASK [add apt-key (Kubernetes) url=https://packages.cloud.google.com/apt/doc/apt-key.gpg] ******************************
-2021-06-19 13:29:13,997 p=142 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:29:14,003 p=142 u=kali n=ansible | TASK [add docker repo repo=deb https://download.docker.com/linux/ubuntu focal stable] **********************************
-2021-06-19 13:29:21,746 p=142 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:29:21,752 p=142 u=kali n=ansible | TASK [add kubernetes repo repo=deb https://apt.kubernetes.io/ kubernetes-xenial main] **********************************
-2021-06-19 13:29:29,457 p=142 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:29:29,463 p=142 u=kali n=ansible | TASK [install docker name=['docker-ce', 'docker-ce-cli', 'containerd.io'], update_cache=True] **************************
-2021-06-19 13:29:55,168 p=142 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:29:55,176 p=142 u=kali n=ansible | TASK [install kubernetes name=['kubelet', 'kubeadm', 'kubectl'], update_cache=True] ************************************
-2021-06-19 13:30:16,361 p=142 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:30:16,374 p=142 u=kali n=ansible | PLAY RECAP *************************************************************************************************************
-2021-06-19 13:30:16,374 p=142 u=kali n=ansible | 207.148.73.66              : ok=8    changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-2021-06-19 13:33:34,805 p=354 u=kali n=ansible | PLAY [main] ********************************************************************
-2021-06-19 13:33:34,812 p=354 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ****************
-2021-06-19 13:33:39,028 p=354 u=kali n=ansible | ok: [207.148.73.66]
-2021-06-19 13:33:39,042 p=354 u=kali n=ansible | TASK [update repositories update_cache=True, force_apt_get=True] ***************
-2021-06-19 13:33:42,432 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:33:42,438 p=354 u=kali n=ansible | TASK [upgrade all packages upgrade=dist, force_apt_get=True] *******************
-2021-06-19 13:36:29,610 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:29,892 p=354 u=kali n=ansible | TASK [setup auto-upgrade dest=/etc/apt/apt.conf.d/20auto-upgrades, content=APT::Periodic::Update-Package-Lists "1";
+2021-06-22 19:42:58,973 p=6265 u=kali n=ansible | PLAY [all] *****************************************************************************************************************************************************************
+2021-06-22 19:42:58,983 p=6265 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ************************************************************************************************************
+2021-06-22 19:43:02,205 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:02,325 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:02,418 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:02,428 p=6265 u=kali n=ansible | TASK [add user "user" name=user, groups=root, shell=/bin/bash] *************************************************************************************************************
+2021-06-22 19:43:04,397 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:43:04,740 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:43:04,756 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:43:04,764 p=6265 u=kali n=ansible | TASK [add ssh key for user user=user, key={{ lookup('file', './keys/user.pub') }}] *****************************************************************************************
+2021-06-22 19:43:06,799 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:07,078 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:07,189 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:07,196 p=6265 u=kali n=ansible | TASK [add user to sudoers.d dest=/etc/sudoers.d/user, content=user ALL=(ALL) NOPASSWD: ALL
+, owner=root, group=root, mode=288] *********************************************
+2021-06-22 19:43:10,512 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:10,952 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:11,022 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:11,027 p=6265 u=kali n=ansible | TASK [install prerequisites name=['apt-transport-https', 'ca-certificates', 'curl', 'gnupg-agent', 'lsb-release'], update_cache=True] **************************************
+2021-06-22 19:43:15,016 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:15,197 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:16,055 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:16,061 p=6265 u=kali n=ansible | TASK [add apt-key (Docker) url=https://download.docker.com/linux/ubuntu/gpg] ***********************************************************************************************
+2021-06-22 19:43:18,619 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:18,806 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:18,923 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:18,930 p=6265 u=kali n=ansible | TASK [add apt-key (Kubernetes) url=https://packages.cloud.google.com/apt/doc/apt-key.gpg] **********************************************************************************
+2021-06-22 19:43:21,405 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:21,563 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:21,739 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:21,747 p=6265 u=kali n=ansible | TASK [add docker repo repo=deb https://download.docker.com/linux/ubuntu focal stable] **************************************************************************************
+2021-06-22 19:43:23,945 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:24,061 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:24,256 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:24,263 p=6265 u=kali n=ansible | TASK [add kubernetes repo repo=deb https://apt.kubernetes.io/ kubernetes-xenial main] **************************************************************************************
+2021-06-22 19:43:26,333 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:26,447 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:26,697 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:26,705 p=6265 u=kali n=ansible | TASK [install docker name=['docker-ce', 'docker-ce-cli', 'containerd.io'], update_cache=True] ******************************************************************************
+2021-06-22 19:43:30,537 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:31,027 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:31,491 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:31,498 p=6265 u=kali n=ansible | TASK [Add user to the docker group _raw_params=usermod -aG docker user] ****************************************************************************************************
+2021-06-22 19:43:33,442 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:43:33,648 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:43:33,866 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:43:33,874 p=6265 u=kali n=ansible | TASK [install kubelet and kubeadm name=['kubelet', 'kubeadm'], update_cache=True] ******************************************************************************************
+2021-06-22 19:43:37,530 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:38,243 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:43:38,999 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:43:39,019 p=6265 u=kali n=ansible | PLAY [master] **************************************************************************************************************************************************************
+2021-06-22 19:43:39,026 p=6265 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ************************************************************************************************************
+2021-06-22 19:43:42,966 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:42,979 p=6265 u=kali n=ansible | TASK [install kubectl name=['kubectl'], update_cache=True] *****************************************************************************************************************
+2021-06-22 19:43:46,990 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:47,004 p=6265 u=kali n=ansible | PLAY [master] **************************************************************************************************************************************************************
+2021-06-22 19:43:47,011 p=6265 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ************************************************************************************************************
+2021-06-22 19:43:49,975 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:43:49,987 p=6265 u=kali n=ansible | TASK [Reset kudeadm to resolve port used error _raw_params=kubeadm reset -f] ***********************************************************************************************
+2021-06-22 19:43:52,111 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:43:52,117 p=6265 u=kali n=ansible | TASK [initialize the cluster _raw_params=kubeadm init --apiserver-advertise-address {{master_ip}} --pod-network-cidr={{ cidr }} --ignore-preflight-errors='NumCPU,Mem'] ****
+2021-06-22 19:44:34,269 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:44:34,276 p=6265 u=kali n=ansible | TASK [create .kube directory path=$HOME/.kube, state=directory, mode=493] **************************************************************************************************
+2021-06-22 19:44:37,125 p=6265 u=kali n=ansible | [WARNING]: Module remote_tmp /home/user/.ansible/tmp did not exist and was created with a mode of 0700, this may cause issues when running as another user. To avoid this,
+create the remote_tmp dir with the correct permissions manually
+
+2021-06-22 19:44:37,125 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:44:37,131 p=6265 u=kali n=ansible | TASK [copy admin.conf to user's kube config src=/etc/kubernetes/admin.conf, dest=/home/user/.kube/config, remote_src=True, owner=user] *************************************
+2021-06-22 19:44:39,108 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:44:39,115 p=6265 u=kali n=ansible | TASK [install Pod network _raw_params=kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml] *****************************
+2021-06-22 19:44:42,276 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:44:42,290 p=6265 u=kali n=ansible | PLAY [master] **************************************************************************************************************************************************************
+2021-06-22 19:44:42,305 p=6265 u=kali n=ansible | TASK [get join command _raw_params=kubeadm token create --print-join-command] **********************************************************************************************
+2021-06-22 19:44:44,425 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:44:44,432 p=6265 u=kali n=ansible | TASK [set join command join_command={{ join_command_raw.stdout_lines[0] }}] ************************************************************************************************
+2021-06-22 19:44:44,461 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:44:44,474 p=6265 u=kali n=ansible | PLAY [worker] **************************************************************************************************************************************************************
+2021-06-22 19:44:44,483 p=6265 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ************************************************************************************************************
+2021-06-22 19:44:48,580 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:44:48,655 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:44:48,665 p=6265 u=kali n=ansible | TASK [Reset kudeadm to resolve port used error _raw_params=kubeadm reset -f] ***********************************************************************************************
+2021-06-22 19:44:50,971 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:44:51,094 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:44:51,099 p=6265 u=kali n=ansible | TASK [join cluster _raw_params={{ hostvars['master_1'].join_command }} --ignore-preflight-errors='NumCPU,Mem'] *************************************************************
+2021-06-22 19:44:59,916 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:45:00,716 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:45:00,728 p=6265 u=kali n=ansible | PLAY [all] *****************************************************************************************************************************************************************
+2021-06-22 19:45:00,737 p=6265 u=kali n=ansible | TASK [Gathering Facts gather_subset=['all'], gather_timeout=10] ************************************************************************************************************
+2021-06-22 19:45:03,699 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:45:04,111 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:45:04,227 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:45:04,268 p=6265 u=kali n=ansible | TASK [update repositories update_cache=True, force_apt_get=True] ***********************************************************************************************************
+2021-06-22 19:45:08,081 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:45:08,452 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:45:10,907 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:45:10,914 p=6265 u=kali n=ansible | TASK [upgrade all packages upgrade=dist, force_apt_get=True] ***************************************************************************************************************
+2021-06-22 19:47:35,397 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:47:39,891 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:04,045 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:04,052 p=6265 u=kali n=ansible | TASK [setup auto-upgrade dest=/etc/apt/apt.conf.d/20auto-upgrades, content=APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Unattended-Upgrade "1";
-] ***
-2021-06-19 13:36:33,850 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:33,856 p=354 u=kali n=ansible | TASK [add user "user" name=user, groups=root, shell=/bin/bash] *****************
-2021-06-19 13:36:35,666 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:35,674 p=354 u=kali n=ansible | TASK [add ssh key for user user=user, key={{ lookup('file', './keys/user.pub') }}] ***
-2021-06-19 13:36:37,722 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:37,727 p=354 u=kali n=ansible | TASK [add user to sudoers.d dest=/etc/sudoers.d/user, content=user ALL=(ALL) NOPASSWD: ALL
-, owner=root, group=root, mode=288] ***
-2021-06-19 13:36:41,213 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:41,219 p=354 u=kali n=ansible | TASK [disable empty password login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PermitEmptyPasswords, line=PermitEmptyPasswords no] ***
-2021-06-19 13:36:42,866 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:42,872 p=354 u=kali n=ansible | TASK [disable remote root login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PermitRootLogin, line=PermitRootLogin no] ***
-2021-06-19 13:36:44,428 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:44,434 p=354 u=kali n=ansible | TASK [disable password login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PasswordAuthentication , line=PasswordAuthentication no] ***
-2021-06-19 13:36:46,298 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:46,310 p=354 u=kali n=ansible | TASK [change ssh port from 22 to 4268 dest=/etc/ssh/sshd_config, regexp=^(#\s*)?Port 22 , line=Port 4268] ***
-2021-06-19 13:36:47,892 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:47,899 p=354 u=kali n=ansible | TASK [restart ssh name=ssh, state=restarted] ***********************************
-2021-06-19 13:36:50,041 p=354 u=kali n=ansible | changed: [207.148.73.66]
-2021-06-19 13:36:50,055 p=354 u=kali n=ansible | PLAY RECAP *********************************************************************
-2021-06-19 13:36:50,056 p=354 u=kali n=ansible | 207.148.73.66              : ok=12   changed=11   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+] ***************
+2021-06-22 19:49:08,465 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:09,736 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:09,877 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:49:09,884 p=6265 u=kali n=ansible | TASK [verify NIS client is not installed name=yp-tools, state=absent] ******************************************************************************************************
+2021-06-22 19:49:12,267 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:49:12,293 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:49:12,753 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:49:12,760 p=6265 u=kali n=ansible | TASK [verify rsh client is not installed name=rsh, state=absent] ***********************************************************************************************************
+2021-06-22 19:49:15,075 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:49:15,119 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:49:15,397 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:49:15,403 p=6265 u=kali n=ansible | TASK [verify talk client is not installed name=talk, state=absent] *********************************************************************************************************
+2021-06-22 19:49:17,745 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:49:17,763 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:49:18,729 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:49:18,736 p=6265 u=kali n=ansible | TASK [verify telnet client is not installed name=telnet, state=absent] *****************************************************************************************************
+2021-06-22 19:49:23,595 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:49:23,794 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:25,830 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:25,837 p=6265 u=kali n=ansible | TASK [verify LDAP client is not installed name=ldap-utils, state=absent] ***************************************************************************************************
+2021-06-22 19:49:28,127 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:49:28,133 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:49:28,573 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:49:28,581 p=6265 u=kali n=ansible | TASK [verify RPC is not installed name=rpcbind, state=absent] **************************************************************************************************************
+2021-06-22 19:49:30,822 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:49:30,865 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:49:31,476 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:49:31,484 p=6265 u=kali n=ansible | TASK [disable ipv6 name={{ item }}, value=1, state=present, reload=True] ***************************************************************************************************
+2021-06-22 19:49:33,421 p=6265 u=kali n=ansible | changed: [worker_1] => (item=net.ipv6.conf.all.disable_ipv6)
+2021-06-22 19:49:33,471 p=6265 u=kali n=ansible | changed: [worker_2] => (item=net.ipv6.conf.all.disable_ipv6)
+2021-06-22 19:49:33,668 p=6265 u=kali n=ansible | changed: [master_1] => (item=net.ipv6.conf.all.disable_ipv6)
+2021-06-22 19:49:35,137 p=6265 u=kali n=ansible | changed: [worker_1] => (item=net.ipv6.conf.default.disable_ipv6)
+2021-06-22 19:49:35,248 p=6265 u=kali n=ansible | changed: [worker_2] => (item=net.ipv6.conf.default.disable_ipv6)
+2021-06-22 19:49:35,681 p=6265 u=kali n=ansible | changed: [master_1] => (item=net.ipv6.conf.default.disable_ipv6)
+2021-06-22 19:49:36,891 p=6265 u=kali n=ansible | changed: [worker_1] => (item=net.ipv6.conf.lo.disable_ipv6)
+2021-06-22 19:49:37,044 p=6265 u=kali n=ansible | changed: [worker_2] => (item=net.ipv6.conf.lo.disable_ipv6)
+2021-06-22 19:49:37,673 p=6265 u=kali n=ansible | changed: [master_1] => (item=net.ipv6.conf.lo.disable_ipv6)
+2021-06-22 19:49:37,693 p=6265 u=kali n=ansible | TASK [disable ipv4 forwarding name=net.ipv4.ip_forward, value=0, state=present, reload=True] *******************************************************************************
+2021-06-22 19:49:39,632 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:49:39,635 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:39,681 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:39,696 p=6265 u=kali n=ansible | TASK [verify ufw is installed name=ufw, state=present] *********************************************************************************************************************
+2021-06-22 19:49:42,173 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:49:42,240 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:49:42,481 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:49:42,490 p=6265 u=kali n=ansible | TASK [uninstall iptables-persistent name=iptables-persistent, state=absent] ************************************************************************************************
+2021-06-22 19:49:44,818 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:49:44,829 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:49:45,182 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:49:45,190 p=6265 u=kali n=ansible | TASK [allow traffic into lo rule=allow, direction=in, interface=lo] ********************************************************************************************************
+2021-06-22 19:49:47,436 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:49:47,538 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:47,581 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:47,590 p=6265 u=kali n=ansible | TASK [allow all outbound connections rule=allow, direction=out, interface=all] *********************************************************************************************
+2021-06-22 19:49:49,673 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:49:49,690 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:49,871 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:49,880 p=6265 u=kali n=ansible | TASK [enable firewall on ssh rule=allow, proto=tcp, port=22] ***************************************************************************************************************
+2021-06-22 19:49:51,957 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:49:51,969 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:52,155 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:52,164 p=6265 u=kali n=ansible | TASK [default deny firewall policy rule=deny, direction={{ item }}] ********************************************************************************************************
+2021-06-22 19:49:54,276 p=6265 u=kali n=ansible | changed: [worker_2] => (item=in)
+2021-06-22 19:49:54,292 p=6265 u=kali n=ansible | changed: [worker_1] => (item=in)
+2021-06-22 19:49:54,474 p=6265 u=kali n=ansible | changed: [master_1] => (item=in)
+2021-06-22 19:49:56,265 p=6265 u=kali n=ansible | changed: [worker_2] => (item=out)
+2021-06-22 19:49:56,378 p=6265 u=kali n=ansible | changed: [worker_1] => (item=out)
+2021-06-22 19:49:56,690 p=6265 u=kali n=ansible | changed: [master_1] => (item=out)
+2021-06-22 19:49:56,700 p=6265 u=kali n=ansible | TASK [flush ipv4 tables flush=True] ****************************************************************************************************************************************
+2021-06-22 19:49:58,632 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:49:58,726 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:49:58,855 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:49:58,864 p=6265 u=kali n=ansible | TASK [install auditd name=audispd-plugins, state=present, install_recommends=False] ****************************************************************************************
+2021-06-22 19:50:05,892 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:50:06,241 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:50:09,554 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:50:09,565 p=6265 u=kali n=ansible | TASK [enable auditd name=auditd, state=started, enabled=True] **************************************************************************************************************
+2021-06-22 19:50:12,240 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:12,477 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:12,609 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:12,615 p=6265 u=kali n=ansible | TASK [install rsyslog name=rsyslog, state=present] *************************************************************************************************************************
+2021-06-22 19:50:15,486 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:15,596 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:16,216 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:16,226 p=6265 u=kali n=ansible | TASK [enable rsyslog name=rsyslog, enabled=True] ***************************************************************************************************************************
+2021-06-22 19:50:18,732 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:18,823 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:18,957 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:18,964 p=6265 u=kali n=ansible | TASK [configue log permissions dest=/etc/rsyslog.conf, regexp=^\$FileCreateMode, line=$FileCreateMode 0640] ****************************************************************
+2021-06-22 19:50:20,947 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:20,966 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:21,120 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:21,129 p=6265 u=kali n=ansible | TASK [configure journald to send logs to rsyslog dest=/etc/systemd/journald.conf, regexp=(#)?ForwardToSyslog=(yes|no), line=ForwardToSyslog=yes] ***************************
+2021-06-22 19:50:22,996 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:50:23,006 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:50:23,013 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:50:23,021 p=6265 u=kali n=ansible | TASK [change permissions on /etc/cron* dest=/etc/{{ item }}, owner=root, group=root, mode=384] *****************************************************************************
+2021-06-22 19:50:24,872 p=6265 u=kali n=ansible | changed: [worker_1] => (item=crontab)
+2021-06-22 19:50:24,991 p=6265 u=kali n=ansible | changed: [worker_2] => (item=crontab)
+2021-06-22 19:50:25,441 p=6265 u=kali n=ansible | changed: [master_1] => (item=crontab)
+2021-06-22 19:50:26,685 p=6265 u=kali n=ansible | changed: [worker_1] => (item=cron.daily)
+2021-06-22 19:50:26,942 p=6265 u=kali n=ansible | changed: [worker_2] => (item=cron.daily)
+2021-06-22 19:50:27,487 p=6265 u=kali n=ansible | changed: [master_1] => (item=cron.daily)
+2021-06-22 19:50:28,657 p=6265 u=kali n=ansible | changed: [worker_1] => (item=cron.hourly)
+2021-06-22 19:50:29,039 p=6265 u=kali n=ansible | changed: [worker_2] => (item=cron.hourly)
+2021-06-22 19:50:29,535 p=6265 u=kali n=ansible | changed: [master_1] => (item=cron.hourly)
+2021-06-22 19:50:30,464 p=6265 u=kali n=ansible | changed: [worker_1] => (item=cron.monthly)
+2021-06-22 19:50:30,903 p=6265 u=kali n=ansible | changed: [worker_2] => (item=cron.monthly)
+2021-06-22 19:50:31,543 p=6265 u=kali n=ansible | changed: [master_1] => (item=cron.monthly)
+2021-06-22 19:50:32,203 p=6265 u=kali n=ansible | changed: [worker_1] => (item=cron.weekly)
+2021-06-22 19:50:32,749 p=6265 u=kali n=ansible | changed: [worker_2] => (item=cron.weekly)
+2021-06-22 19:50:33,424 p=6265 u=kali n=ansible | changed: [master_1] => (item=cron.weekly)
+2021-06-22 19:50:33,971 p=6265 u=kali n=ansible | changed: [worker_1] => (item=cron.d)
+2021-06-22 19:50:34,535 p=6265 u=kali n=ansible | changed: [worker_2] => (item=cron.d)
+2021-06-22 19:50:35,377 p=6265 u=kali n=ansible | changed: [master_1] => (item=cron.d)
+2021-06-22 19:50:35,384 p=6265 u=kali n=ansible | TASK [change permissions for /etc/passwd dest=/etc/passwd, owner=root, group=root, mode=420] *******************************************************************************
+2021-06-22 19:50:37,247 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:37,303 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:37,310 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:37,319 p=6265 u=kali n=ansible | TASK [change permissions for /etc/gshadow- dest=/etc/gshadow-, owner=root, group=shadow, mode=416] *************************************************************************
+2021-06-22 19:50:39,102 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:39,224 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:39,248 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:39,255 p=6265 u=kali n=ansible | TASK [change permissions for /etc/shadow dest=/etc/shadow, owner=root, group=shadow, mode=416] *****************************************************************************
+2021-06-22 19:50:41,300 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:41,409 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:41,418 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:41,424 p=6265 u=kali n=ansible | TASK [change permissions for /etc/group dest=/etc/group, owner=root, group=root, mode=420] *********************************************************************************
+2021-06-22 19:50:43,481 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:43,823 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:43,905 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:43,915 p=6265 u=kali n=ansible | TASK [change permissions for /etc/passwd- dest=/etc/passwd-, owner=root, group=root, mode=384] *****************************************************************************
+2021-06-22 19:50:46,134 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:50:46,155 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:50:46,183 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:50:46,190 p=6265 u=kali n=ansible | TASK [change permissions for /etc/shadow- dest=/etc/shadow-, owner=root, group=shadow, mode=384] ***************************************************************************
+2021-06-22 19:50:48,421 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:50:48,472 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:50:48,530 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:50:48,537 p=6265 u=kali n=ansible | TASK [change permissions for /etc/group- dest=/etc/group-, owner=root, group=root, mode=420] *******************************************************************************
+2021-06-22 19:50:50,880 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:50,888 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:50,982 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:50,987 p=6265 u=kali n=ansible | TASK [change permissions for /etc/gshadow dest=/etc/gshadow, owner=root, group=shadow, mode=416] ***************************************************************************
+2021-06-22 19:50:52,977 p=6265 u=kali n=ansible | ok: [worker_2]
+2021-06-22 19:50:53,176 p=6265 u=kali n=ansible | ok: [worker_1]
+2021-06-22 19:50:53,292 p=6265 u=kali n=ansible | ok: [master_1]
+2021-06-22 19:50:53,299 p=6265 u=kali n=ansible | TASK [disable empty password login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PermitEmptyPasswords, line=PermitEmptyPasswords no] *******************************************
+2021-06-22 19:50:55,299 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:50:55,394 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:50:55,877 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:50:55,883 p=6265 u=kali n=ansible | TASK [disable remote root login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PermitRootLogin, line=PermitRootLogin no] ********************************************************
+2021-06-22 19:50:57,761 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:50:57,833 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:50:58,003 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:50:58,010 p=6265 u=kali n=ansible | TASK [disable password login dest=/etc/ssh/sshd_config, regexp=^(#\s*)?PasswordAuthentication , line=PasswordAuthentication no] ********************************************
+2021-06-22 19:50:59,816 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:50:59,980 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:51:00,028 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:51:00,035 p=6265 u=kali n=ansible | TASK [restart ssh name=ssh, state=restarted] *******************************************************************************************************************************
+2021-06-22 19:51:02,234 p=6265 u=kali n=ansible | changed: [worker_2]
+2021-06-22 19:51:02,468 p=6265 u=kali n=ansible | changed: [worker_1]
+2021-06-22 19:51:02,666 p=6265 u=kali n=ansible | changed: [master_1]
+2021-06-22 19:51:02,679 p=6265 u=kali n=ansible | PLAY RECAP *****************************************************************************************************************************************************************
+2021-06-22 19:51:02,679 p=6265 u=kali n=ansible | master_1                   : ok=60   changed=28   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2021-06-22 19:51:02,679 p=6265 u=kali n=ansible | worker_1                   : ok=53   changed=24   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2021-06-22 19:51:02,680 p=6265 u=kali n=ansible | worker_2                   : ok=53   changed=24   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

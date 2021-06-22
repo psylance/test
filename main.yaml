@@ -1,0 +1,4 @@
+- import_playbook: install.yaml
+- import_playbook: master.yaml
+- import_playbook: worker.yaml
+- import_playbook: server-hardening.yaml

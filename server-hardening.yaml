@@ -1,5 +1,5 @@
 ---
-  - hosts: main
+  - hosts: all
     tasks:
       - name: update repositories
         apt:
@@ -18,26 +18,198 @@
             APT::Periodic::Update-Package-Lists "1";
             APT::Periodic::Unattended-Upgrade "1";
 
-      - name: add user "user"
-        user:
-          name: user
-          groups: root
-          shell: '/bin/bash'
+      - name: verify NIS client is not installed
+        apt:
+          name: yp-tools
+          state: absent
 
-      - name: add ssh key for user
-        authorized_key:
-          user: user
-          key: "{{ lookup('file', './keys/user.pub') }}"
+      - name: verify rsh client is not installed
+        apt:
+          name: rsh
+          state: absent
 
-      - name: add user to sudoers.d
-        copy:
-          dest: "/etc/sudoers.d/user"
-          content: |
-            user ALL=(ALL) NOPASSWD: ALL
+      - name: verify talk client is not installed
+        apt:
+          name: talk
+          state: absent
+
+      - name: verify telnet client is not installed
+        apt:
+          name: telnet
+          state: absent
+
+      - name: verify LDAP client is not installed
+        apt:
+          name: ldap-utils
+          state: absent
+
+      - name: verify RPC is not installed
+        apt:
+          name: rpcbind
+          state: absent
+  
+      - name: disable ipv6
+        sysctl:
+          name: "{{ item }}"
+          value: "1"
+          state: present
+          reload: true
+        with_items:
+          - net.ipv6.conf.all.disable_ipv6
+          - net.ipv6.conf.default.disable_ipv6
+          - net.ipv6.conf.lo.disable_ipv6
+
+      - name: disable ipv4 forwarding
+        sysctl:
+          name: net.ipv4.ip_forward
+          value: "0"
+          state: present
+          reload: true
+
+      - name: verify ufw is installed
+        apt:
+          name: ufw
+          state: present
+
+      - name: uninstall iptables-persistent
+        apt:
+          name: iptables-persistent
+          state: absent
+
+      - name: allow traffic into lo
+        ufw:
+          rule: allow
+          direction: in
+          interface: lo
+
+      - name: allow all outbound connections
+        ufw:
+          rule: allow
+          direction: out
+          interface: all
+
+      - name: enable firewall on ssh
+        ufw:
+          rule: allow
+          proto: tcp
+          port: '22'
+
+      - name: default deny firewall policy
+        ufw:
+          rule: deny
+          direction: "{{ item }}"
+        with_items:
+          - in
+          - out
+
+      - name: flush ipv4 tables
+        iptables:
+          flush: yes
+
+      - name: install auditd
+        apt:
+          name: audispd-plugins
+          state: present
+          install_recommends: false
+
+      - name: enable auditd
+        service:
+          name: auditd
+          state: started
+          enabled: true
+
+      - name: install rsyslog
+        apt:
+          name: rsyslog
+          state: present
+
+      - name: enable rsyslog
+        service:
+          name: rsyslog
+          enabled: yes    
+
+      - name: configue log permissions
+        lineinfile:
+          dest: /etc/rsyslog.conf
+          regexp: '^\$FileCreateMode'
+          line: '$FileCreateMode 0640'
+
+      - name: configure journald to send logs to rsyslog
+        lineinfile:
+          dest: /etc/systemd/journald.conf
+          regexp: "(#)?ForwardToSyslog=(yes|no)"
+          line: ForwardToSyslog=yes
+
+      - name: change permissions on /etc/cron*
+        file:
+          dest: "/etc/{{ item }}"
           owner: root
           group: root
-          mode: 0440
+          mode: 0600
+        with_items:
+          - crontab
+          - cron.daily
+          - cron.hourly
+          - cron.monthly
+          - cron.weekly
+          - cron.d
 
+      - name: change permissions for /etc/passwd
+        file:
+            dest: /etc/passwd
+            owner: root
+            group: root
+            mode: 0644
+        
+      - name: change permissions for /etc/gshadow-
+        file:
+            dest: /etc/gshadow-
+            owner: root
+            group: shadow
+            mode: 0640
+
+      - name: change permissions for /etc/shadow
+        file:
+            dest: /etc/shadow
+            owner: root
+            group: shadow
+            mode: 0640
+        
+      - name: change permissions for /etc/group
+        file:
+            dest: /etc/group
+            owner: root
+            group: root
+            mode: 0644
+        
+      - name: change permissions for /etc/passwd-
+        file:
+            dest: /etc/passwd-
+            owner: root
+            group: root
+            mode: 0600
+        
+      - name: change permissions for /etc/shadow-
+        file:
+            dest: /etc/shadow-
+            owner: root
+            group: shadow
+            mode: 0600
+        
+      - name: change permissions for /etc/group-
+        file:
+            dest: /etc/group-
+            owner: root
+            group: root
+            mode: 0644
+        
+      - name: change permissions for /etc/gshadow
+        file:
+            dest: /etc/gshadow
+            owner: root
+            group: shadow
+            mode: 0640
+        
       - name: disable empty password login
         lineinfile:
           dest: "/etc/ssh/sshd_config"
@@ -55,12 +227,6 @@
           dest: "/etc/ssh/sshd_config"
           regexp: '^(#\s*)?PasswordAuthentication '
           line: 'PasswordAuthentication no'
-
-      - name: change ssh port from 22 to 4268
-        lineinfile:
-          dest: "/etc/ssh/sshd_config"
-          regexp: '^(#\s*)?Port 22 '
-          line: 'Port 4268'
 
       - name: restart ssh
         service:

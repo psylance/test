@@ -1,9 +1,14 @@
-[main]
-207.148.73.66
+[master]
+master_1 ansible_host=45.76.179.10
 
-[main:vars]
+[worker]
+worker_1 ansible_host=139.180.190.88
+worker_2 ansible_host=149.28.154.83
+
+[master:vars]
 ansible_ssh_user=root
-ansible_ssh_private_key_file= ./keys/id_ed25519
+ansible_ssh_private_key_file= ./keys/master_1
 
-
-
+[worker:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file= ./keys/worker_1

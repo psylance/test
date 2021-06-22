@@ -1,0 +1,31 @@
+- hosts: master
+  become: yes
+  vars_files:
+    - vars
+  tasks:
+    - name: Reset kudeadm to resolve port used error
+      become: yes
+      shell: kubeadm reset -f
+      
+    - name: initialize the cluster
+      shell: kubeadm init --apiserver-advertise-address {{master_ip}} --pod-network-cidr={{ cidr }} --ignore-preflight-errors='NumCPU,Mem'
+
+    - name: create .kube directory
+      become: yes
+      become_user: user
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: 0755
+
+    - name: copy admin.conf to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/user/.kube/config
+        remote_src: yes
+        owner: user
+
+    - name: install Pod network
+      become: yes
+      become_user: user
+      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
