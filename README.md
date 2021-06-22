@@ -13,7 +13,7 @@
 ## Usage
 
 1. Run `ansible-playbook main.yaml` to run all playbooks in intended sequence.
-2. 
+
 ### About Docker Installation
 Docker is installed using the [Docker Docks].
 
